@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: advocate_telegram_bot
+# ----------------------------------------------------------------------------------------------------------------------------------
+telegram:
+  token: ${TG_TOKEN}
+  username: ${TG_BOT_NAME}
