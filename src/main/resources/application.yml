@@ -1,6 +1,17 @@
 spring:
   application:
     name: advocate_telegram_bot
+  mail:
+    host: ${MAIL_HOST}
+    port: 587
+    username: ${MAIL_SENDER}
+    password: ${MAIL_SENDER_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 # ----------------------------------------------------------------------------------------------------------------------------------
 telegram:
   token: ${TG_TOKEN}
