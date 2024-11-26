@@ -21,8 +21,6 @@ public class TelegramUser {
 	private long chatId;
 	private String email;
 	private String phone;
-	private List<String> aiQuestions;
-	private List<String> allQuestions;
 	private boolean aiEnabled;
 	private long consentTime;
 
