@@ -25,6 +25,9 @@ telegram:
   token: ${TG_TOKEN}
   username: ${TG_BOT_NAME}
 
+gemini-connection:
+  api-key: ${GEMINI_API_KEY}
+
 feign-client:
   gemini:
     name: "gemini-rest-client"
