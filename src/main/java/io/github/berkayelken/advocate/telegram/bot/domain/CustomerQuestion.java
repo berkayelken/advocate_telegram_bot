@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CustomerQuestion {
-	private String id;
+	private String questionId;
 	private String question;
 	private String category;
 	private String issueType;
