@@ -1,6 +1,10 @@
+server:
+  port: 9275
+
 spring:
   application:
     name: advocate_telegram_bot
+
   data:
     mongodb:
       uri: ${MONGO_URI}
@@ -15,7 +19,13 @@ spring:
           auth: true
           starttls:
             enable: true
+
 # ----------------------------------------------------------------------------------------------------------------------------------
 telegram:
   token: ${TG_TOKEN}
   username: ${TG_BOT_NAME}
+
+feign-client:
+  gemini:
+    name: "gemini-rest-client"
+    url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent"
