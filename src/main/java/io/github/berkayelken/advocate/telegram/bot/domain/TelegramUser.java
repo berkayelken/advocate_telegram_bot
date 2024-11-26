@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,10 +21,14 @@ public class TelegramUser {
 	private long chatId;
 	private String email;
 	private String phone;
+	private List<CustomerQuestion> aiQuestions;
+	private List<CustomerQuestion> allQuestions;
+	private boolean aiEnabled;
 	private long consentTime;
 
 	public TelegramUser(long chatId) {
 		this.chatId = chatId;
 		this.consentTime = Instant.now().toEpochMilli();
+		this.aiEnabled = true;
 	}
 }
