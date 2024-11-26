@@ -24,8 +24,6 @@ public class TelegramUserTest {
 		TelegramUser user = new TelegramUser();
 		Assertions.assertEquals(DEFAULT_LONG, user.getChatId());
 		Assertions.assertEquals(DEFAULT_LONG, user.getConsentTime());
-		Assertions.assertNull(user.getAllQuestions());
-		Assertions.assertNull(user.getAiQuestions());
 		Assertions.assertFalse(user.isAiEnabled());
 		Assertions.assertNull(user.getEmail());
 		Assertions.assertNull(user.getPhone());
@@ -37,16 +35,12 @@ public class TelegramUserTest {
 
 		user.setChatId(Long.MAX_VALUE);
 		user.setConsentTime(Long.MAX_VALUE);
-		user.setAiQuestions(Collections.emptyList());
-		user.setAllQuestions(Collections.emptyList());
 		user.setAiEnabled(true);
 		user.setEmail(TEST_STR);
 		user.setPhone(TEST_STR);
 
 		Assertions.assertEquals(Long.MAX_VALUE, user.getChatId());
 		Assertions.assertEquals(Long.MAX_VALUE, user.getConsentTime());
-		Assertions.assertNotNull(user.getAllQuestions());
-		Assertions.assertNotNull(user.getAiQuestions());
 		Assertions.assertTrue(user.isAiEnabled());
 		Assertions.assertEquals(TEST_STR,user.getEmail());
 		Assertions.assertEquals(TEST_STR,user.getPhone());
