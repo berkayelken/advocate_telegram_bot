@@ -15,6 +15,7 @@ public class CustomerQuestionTest {
 	@Test
 	public void testAccessors() {
 		CustomerQuestion question = new CustomerQuestion();
+		Assertions.assertNull(question.getId());
 		Assertions.assertNull(question.getQuestion());
 		Assertions.assertNull(question.getAbstractQuestion());
 		Assertions.assertNull(question.getCategory());
@@ -23,6 +24,7 @@ public class CustomerQuestionTest {
 		Assertions.assertNull(question.getAbstractAnswer());
 		Assertions.assertNull(question.getLawyerAnswer());
 		Assertions.assertFalse(question.isSeenByCustomer());
+		Assertions.assertFalse(question.isAskedToAI());
 		Assertions.assertEquals(DEFAULT_LONG, question.getAskingTime());
 	}
 
@@ -30,6 +32,7 @@ public class CustomerQuestionTest {
 	public void testMutators() {
 		CustomerQuestion question = new CustomerQuestion();
 
+		question.setId(TEST_STR);
 		question.setQuestion(TEST_STR);
 		question.setAbstractQuestion(TEST_STR);
 		question.setCategory(TEST_STR);
@@ -38,8 +41,10 @@ public class CustomerQuestionTest {
 		question.setAbstractAnswer(TEST_STR);
 		question.setLawyerAnswer(TEST_STR);
 		question.setSeenByCustomer(true);
+		question.setAskedToAI(true);
 		question.setAskingTime(Long.MAX_VALUE);
 
+		Assertions.assertEquals(TEST_STR, question.getId());
 		Assertions.assertEquals(TEST_STR, question.getQuestion());
 		Assertions.assertEquals(TEST_STR, question.getAbstractQuestion());
 		Assertions.assertEquals(TEST_STR, question.getCategory());
@@ -48,6 +53,7 @@ public class CustomerQuestionTest {
 		Assertions.assertEquals(TEST_STR, question.getAbstractAnswer());
 		Assertions.assertEquals(TEST_STR, question.getLawyerAnswer());
 		Assertions.assertTrue(question.isSeenByCustomer());
+		Assertions.assertTrue(question.isAskedToAI());
 		Assertions.assertEquals(Long.MAX_VALUE, question.getAskingTime());
 	}
 
