@@ -21,7 +21,9 @@ public enum MessageAction {
 	DELETE_ACCOUNT_APPROVE,
 	DELETE_ALL_QUESTIONS,
 	HELP(false),
-	ANSWER(true, true);
+	ANSWER(true, true),
+	EMAIL_APPROVE_MAIL(false, true),
+	ACCOUNT_DELETION_APPROVE_MAIL(false, true);
 
 	private final boolean needAction;
 	private final boolean messageTemplate;
