@@ -17,6 +17,7 @@ public class StaticBotMessage {
 	@Id
 	@MongoId
 	private String id;
+	private MessageAction action;
 	private String userMessage;
 	private boolean prefix;
 	private String message;
