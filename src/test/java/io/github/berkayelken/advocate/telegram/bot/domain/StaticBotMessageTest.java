@@ -31,13 +31,7 @@ public class StaticBotMessageTest {
 
 	@Test
 	public void testMutators() {
-		StaticBotMessage message = new StaticBotMessage();
-		message.setId(TEST_STR);
-		message.setAction(MessageAction.AGREE);
-		message.setMessage(TEST_STR);
-		message.setFailMessage(TEST_STR);
-		message.setUserMessage(TEST_STR);
-		message.setPrefix(true);
+		StaticBotMessage message = createBotMessage();
 		message.setFixedKeyboard(Collections.singletonList(TEST_STR));
 		Assertions.assertEquals(TEST_STR, message.getId());
 		Assertions.assertEquals(MessageAction.AGREE, message.getAction());
@@ -46,5 +40,16 @@ public class StaticBotMessageTest {
 		Assertions.assertEquals(TEST_STR, message.getUserMessage());
 		Assertions.assertTrue(message.isPrefix());
 		Assertions.assertNotNull(message.getFixedKeyboard());
+	}
+
+	public static StaticBotMessage createBotMessage() {
+		StaticBotMessage message = new StaticBotMessage();
+		message.setId(TEST_STR);
+		message.setAction(MessageAction.AGREE);
+		message.setMessage(TEST_STR);
+		message.setFailMessage(TEST_STR);
+		message.setUserMessage(TEST_STR);
+		message.setPrefix(true);
+		return message;
 	}
 }
