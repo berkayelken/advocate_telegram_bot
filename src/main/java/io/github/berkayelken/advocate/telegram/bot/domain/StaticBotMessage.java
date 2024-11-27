@@ -18,6 +18,8 @@ public class StaticBotMessage {
 	@MongoId
 	private String id;
 	private String userMessage;
+	private boolean prefix;
 	private String message;
+	private String failMessage;
 	private List<String> fixedKeyboard;
 }
