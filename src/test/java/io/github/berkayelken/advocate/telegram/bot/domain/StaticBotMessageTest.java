@@ -23,6 +23,10 @@ public class StaticBotMessageTest {
 		Assertions.assertNull(message.getUserMessage());
 		Assertions.assertNull(message.getFixedKeyboard());
 		Assertions.assertFalse(message.isPrefix());
+		Assertions.assertFalse(message.isRelatedUserMessage());
+		Assertions.assertFalse(message.isAnswerMessage());
+		Assertions.assertFalse(message.isAccountDeletion());
+		Assertions.assertFalse(message.isMailApprove());
 	}
 
 	@Test
