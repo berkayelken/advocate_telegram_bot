@@ -24,6 +24,14 @@ public class StaticBotMessage {
 	private String failMessage;
 	private List<String> fixedKeyboard;
 
+	public boolean isCommandMessage(String text) {
+		if(prefix) {
+			return text.startsWith(userMessage);
+		}
+
+		return text.equalsIgnoreCase(userMessage);
+	}
+
 	public boolean isRelatedUserMessage() {
 		return action != null && !action.isMessageTemplate();
 	}
