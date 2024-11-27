@@ -23,4 +23,20 @@ public class StaticBotMessage {
 	private String message;
 	private String failMessage;
 	private List<String> fixedKeyboard;
+
+	public boolean isRelatedUserMessage() {
+		return action != null && !action.isMessageTemplate();
+	}
+
+	public boolean isAnswerMessage() {
+		return MessageAction.ANSWER == action;
+	}
+
+	public boolean isMailApprove() {
+		return MessageAction.EMAIL_APPROVE_MAIL == action;
+	}
+
+	public boolean isAccountDeletion() {
+		return MessageAction.ACCOUNT_DELETION_APPROVE_MAIL == action;
+	}
 }
