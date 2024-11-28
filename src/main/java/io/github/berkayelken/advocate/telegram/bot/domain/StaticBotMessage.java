@@ -59,4 +59,8 @@ public class StaticBotMessage {
 	public ApproveAction findAndGetApproveAction() {
 		return ApproveAction.findInstance(type);
 	}
+
+	public boolean hasNoAction() {
+		return !type.isNeedAction();
+	}
 }
