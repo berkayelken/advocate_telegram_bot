@@ -34,7 +34,8 @@ public final class JsonUtil {
 	 */
 	public static <T> T jsonToObject(String json, Class<? extends T> clazz) {
 		try {
-			return OBJECT_MAPPER.readValue(json, clazz);
+			String handled = json.substring(json.indexOf("{"), json.lastIndexOf("}") + 1);
+			return OBJECT_MAPPER.readValue(handled, clazz);
 		} catch (IOException e) {
 			log.error("[jsonToObject()] :: exception occurred: ", e);
 			return null;
