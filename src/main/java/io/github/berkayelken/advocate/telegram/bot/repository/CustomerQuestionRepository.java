@@ -7,15 +7,16 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 @Repository
 public interface CustomerQuestionRepository extends MongoRepository<CustomerQuestion, String> {
-	List<CustomerQuestion> findAllByEmail(String email);
+	Stream<CustomerQuestion> findAllByEmail(String email);
 
 	List<CustomerQuestion> findAllByEmailAndAskedToAIAndAskingTimeGreaterThanEqual(String email, boolean askedToAI,
 			long askingTime);
 
-	boolean deleteAllByEmail(String email);
+	void deleteAllByEmail(String email);
 
 	Page<CustomerQuestion> findAllByCategory(Pageable pageable, String category);
 
