@@ -25,7 +25,7 @@ public class StaticBotMessage {
 	private List<String> fixedKeyboard;
 
 	public boolean isCommandMessage(String text) {
-		if(prefix) {
+		if (prefix) {
 			return text.startsWith(userMessage);
 		}
 
@@ -54,5 +54,9 @@ public class StaticBotMessage {
 		}
 
 		return text.substring(userMessage.length()).trim();
+	}
+
+	public ApproveAction findAndGetApproveAction() {
+		return ApproveAction.findInstance(type);
 	}
 }
