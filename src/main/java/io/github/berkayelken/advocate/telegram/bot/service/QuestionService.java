@@ -55,8 +55,9 @@ public class QuestionService {
 		repository.deleteById(id);
 	}
 
-	public void deleteAllQuestionOfUser(String email) {
-		repository.deleteAllByEmail(email);
+	public void deleteAllQuestionOfUser(Long chatId) {
+		TelegramUser user = userService.findUser(chatId);
+		repository.deleteAllByEmail(user.getEmail());
 	}
 
 	private CustomerQuestion askQuestion(TelegramUser user, String question) {
