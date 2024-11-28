@@ -42,6 +42,14 @@ public class StaticBotMessageTest {
 		Assertions.assertNotNull(message.getFixedKeyboard());
 	}
 
+	@Test
+	public void testFindAndGetUserMessageInsteadOfCommands() {
+		StaticBotMessage message = createBotMessage();
+		Assertions.assertDoesNotThrow(() -> message.findAndGetUserMessageInsteadOfCommands(TEST_STR));
+		message.setPrefix(false);
+		Assertions.assertDoesNotThrow(() -> message.findAndGetUserMessageInsteadOfCommands(TEST_STR));
+	}
+
 	public static StaticBotMessage createBotMessage() {
 		StaticBotMessage message = new StaticBotMessage();
 		message.setId(TEST_STR);
