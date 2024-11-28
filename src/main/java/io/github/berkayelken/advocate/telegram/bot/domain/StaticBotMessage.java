@@ -47,4 +47,12 @@ public class StaticBotMessage {
 	public boolean isAccountDeletion() {
 		return MessageAction.ACCOUNT_DELETION_APPROVE_MAIL == type;
 	}
+
+	public String findAndGetUserMessageInsteadOfCommands(String text) {
+		if (!prefix) {
+			return text;
+		}
+
+		return text.substring(userMessage.length()).trim();
+	}
 }
