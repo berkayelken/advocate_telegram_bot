@@ -26,6 +26,7 @@ public class MailService {
 	private final ApprovingRecordRepository repository;
 	private final TelegramUserService userService;
 	private final QuestionService questionService;
+	private final StaticBotMessageCache cache;
 
 	public void checkApprove(Long chatId, StaticBotMessage message, String text) {
 		TelegramUser user = userService.findUser(chatId);
@@ -38,24 +39,34 @@ public class MailService {
 			questionService.updateUserContext(user.getEmail(), userService.findUser(chatId));
 		} else {
 			userService.deleteUser(chatId);
-			questionService.deleteAllQuestionOfUser(user.getEmail());
+			questionService.deleteAllQuestionOfUser(chatId);
 		}
 		repository.deleteById(record.getId());
 	}
 
-	public void sendMail(String email, StaticBotMessage message) throws MessagingException {
+	public void sendMail(Long chatId, StaticBotMessage message) throws MessagingException {
+		TelegramUser user = userService.findUser(chatId);
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, MAIL_ENCODING);
 
 		helper.setFrom(properties.getSender());
-		helper.setTo(email);
+		helper.setTo(user.getEmail());
 		helper.setSubject(TITLE_OF_MAIL);
 
-		ApprovingRecord record = saveApprovingRecord(email, message.getType());
-		String content = String.format(message.getMessage(), record.getCode());
+		ApprovingRecord record = saveApprovingRecord(user.getEmail(), message.getType());
+		StaticBotMessage mailMessage = getMailTemplate(message);
+		String content = String.format(mailMessage.getMessage(), record.getCode());
 		helper.setText(content);
 
 		mailSender.send(mimeMessage);
+	}
+
+	private StaticBotMessage getMailTemplate(StaticBotMessage message) {
+		if (message.getType() == MessageAction.EMAIL) {
+			return cache.getMailApproveMessage();
+		}
+
+		return cache.getAccountDeletionMessage();
 	}
 
 	private ApprovingRecord saveApprovingRecord(String email, MessageAction action) {
