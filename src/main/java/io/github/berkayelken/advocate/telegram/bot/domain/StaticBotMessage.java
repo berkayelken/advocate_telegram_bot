@@ -14,6 +14,7 @@ import java.util.List;
 @ToString
 @Document
 public class StaticBotMessage {
+	private static final String SPACE = " ";
 	@Id
 	@MongoId
 	private String id;
@@ -26,7 +27,7 @@ public class StaticBotMessage {
 
 	public boolean isCommandMessage(String text) {
 		if (prefix) {
-			return text.startsWith(userMessage);
+			return text.startsWith(userMessage + SPACE);
 		}
 
 		return text.equalsIgnoreCase(userMessage);

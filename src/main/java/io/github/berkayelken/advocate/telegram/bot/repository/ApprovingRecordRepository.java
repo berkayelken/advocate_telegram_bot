@@ -9,5 +9,9 @@ import java.util.Optional;
 
 @Repository
 public interface ApprovingRecordRepository extends CrudRepository<ApprovingRecord, String> {
+	Optional<ApprovingRecord> findByCodeAndType(String code, ApproveAction type);
+
 	Optional<ApprovingRecord> findByEmailAndCodeAndType(String email, String code, ApproveAction type);
+
+	boolean existsByCodeAndType(String code, ApproveAction type);
 }

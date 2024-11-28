@@ -12,11 +12,11 @@ import java.util.List;
 @Service
 public class ReplyKeyboardBuilder {
 
-	public SendMessage buildMessage(Long chatId, StaticBotMessage botMessage, Object... outputItems) {
+	public SendMessage buildMessage(Long chatId, StaticBotMessage botMessage, String... outputItems) {
 		return buildMessage(chatId, botMessage, false, outputItems);
 	}
 
-	public SendMessage buildMessage(Long chatId, StaticBotMessage botMessage, boolean fail, Object... outputItems) {
+	public SendMessage buildMessage(Long chatId, StaticBotMessage botMessage, boolean fail, String... outputItems) {
 		SendMessage sendMessage = new SendMessage();
 
 		sendMessage.setChatId(chatId);
@@ -25,7 +25,7 @@ public class ReplyKeyboardBuilder {
 		}
 
 		if (outputItems != null) {
-			sendMessage.setText(String.format(botMessage.findFeasibleMessage(fail), outputItems));
+			sendMessage.setText(String.format(botMessage.findFeasibleMessage(fail), (Object[]) outputItems));
 		} else {
 			sendMessage.setText(botMessage.findFeasibleMessage(fail));
 		}

@@ -38,4 +38,8 @@ public class ApprovingRecord {
 	public boolean checkFreshness() {
 		return Instant.now().isBefore(Instant.ofEpochMilli(expiresTime));
 	}
+
+	public void refreshCode() {
+		code = IdGenerator.getDigitId(ID_SIZE);
+	}
 }

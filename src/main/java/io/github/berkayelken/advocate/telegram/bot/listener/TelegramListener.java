@@ -67,7 +67,7 @@ public class TelegramListener extends TelegramLongPollingBot {
 		if (message.hasText()) {
 			String text = message.getText();
 			StaticBotMessage botMessage = cache.getMessage(text);
-			if (botMessage.hasNoAction()) {
+ 			if (botMessage.hasNoAction()) {
 				execute(replyKeyboardBuilder.buildMessage(chatId, botMessage));
 				return;
 			}
@@ -105,7 +105,7 @@ public class TelegramListener extends TelegramLongPollingBot {
 
 	private void handleEmailAction(Long chatId, StaticBotMessage botMessage, String text) throws MessagingException {
 		switch (botMessage.getType()) {
-			case DELETE_ACCOUNT, EMAIL -> mailService.sendMail(chatId, botMessage);
+			case DELETE_ACCOUNT, EMAIL -> mailService.sendMail(chatId, botMessage, text);
 			case EMAIL_APPROVE, DELETE_ACCOUNT_APPROVE -> mailService.checkApprove(chatId, botMessage, text);
 		}
 	}

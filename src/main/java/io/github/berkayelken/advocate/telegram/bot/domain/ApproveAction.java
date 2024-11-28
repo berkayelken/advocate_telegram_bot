@@ -6,10 +6,10 @@ public enum ApproveAction {
 
 	public static ApproveAction findInstance(MessageAction action) {
 		switch (action) {
-			case EMAIL_APPROVE_MAIL -> {
+			case EMAIL_APPROVE, EMAIL -> {
 				return ADD_EMAIL;
 			}
-			case DELETE_ACCOUNT_APPROVE -> {
+			case DELETE_ACCOUNT_APPROVE, DELETE_ACCOUNT -> {
 				return REMOVE_ACCOUNT;
 			}
 			default -> {

@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @AllArgsConstructor
 @Service
@@ -31,9 +32,7 @@ public class MailService {
 	public void checkApprove(Long chatId, StaticBotMessage message, String text) {
 		TelegramUser user = userService.findUser(chatId);
 		ApproveAction action = message.findAndGetApproveAction();
-		String code = message.findAndGetUserMessageInsteadOfCommands(text);
-		ApprovingRecord record = repository.findByEmailAndCodeAndType(user.getEmail(), code, action)
-				.orElseThrow(CodeNotFoundException::new);
+		ApprovingRecord record = getRecord(user, message, action, text);
 		if (ApproveAction.ADD_EMAIL == action) {
 			userService.addEmail(chatId, record.getEmail());
 			questionService.updateUserContext(user.getEmail(), userService.findUser(chatId));
@@ -44,21 +43,38 @@ public class MailService {
 		repository.deleteById(record.getId());
 	}
 
-	public void sendMail(Long chatId, StaticBotMessage message) throws MessagingException {
+	public void sendMail(Long chatId, StaticBotMessage message, String text) throws MessagingException {
 		TelegramUser user = userService.findUser(chatId);
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, MAIL_ENCODING);
 
 		helper.setFrom(properties.getSender());
-		helper.setTo(user.getEmail());
+		String email = getEmailAddress(user, message, text);
+		helper.setTo(email);
 		helper.setSubject(TITLE_OF_MAIL);
 
-		ApprovingRecord record = saveApprovingRecord(user.getEmail(), message.getType());
+		ApprovingRecord record = saveApprovingRecord(email, message.getType());
 		StaticBotMessage mailMessage = getMailTemplate(message);
 		String content = String.format(mailMessage.getMessage(), record.getCode());
 		helper.setText(content);
 
 		mailSender.send(mimeMessage);
+	}
+
+	private ApprovingRecord getRecord(TelegramUser user, StaticBotMessage message, ApproveAction action, String text) {
+		String code = message.findAndGetUserMessageInsteadOfCommands(text);
+		if (action == ApproveAction.ADD_EMAIL) {
+			return repository.findByCodeAndType(code, action).orElseThrow(CodeNotFoundException::new);
+		}
+		return repository.findByEmailAndCodeAndType(user.getEmail(), code, action).orElseThrow(CodeNotFoundException::new);
+	}
+
+	private String getEmailAddress(TelegramUser user, StaticBotMessage message, String text) {
+		if (StringUtils.hasText(user.getEmail())) {
+			return user.getEmail();
+		}
+
+		return message.findAndGetUserMessageInsteadOfCommands(text);
 	}
 
 	private StaticBotMessage getMailTemplate(StaticBotMessage message) {
@@ -70,7 +86,12 @@ public class MailService {
 	}
 
 	private ApprovingRecord saveApprovingRecord(String email, MessageAction action) {
-		return repository.save(new ApprovingRecord(email, action));
+		ApprovingRecord record = new ApprovingRecord(email, action);
+		while(repository.existsByCodeAndType(record.getCode(), record.getType())) {
+			record.refreshCode();
+		}
+
+		return repository.save(record);
 	}
 
 }
