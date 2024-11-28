@@ -17,7 +17,7 @@ public class StaticBotMessage {
 	@Id
 	@MongoId
 	private String id;
-	private MessageAction action;
+	private MessageAction type;
 	private String userMessage;
 	private boolean prefix;
 	private String message;
@@ -33,18 +33,18 @@ public class StaticBotMessage {
 	}
 
 	public boolean isRelatedUserMessage() {
-		return action != null && !action.isMessageTemplate();
+		return type != null && !type.isMessageTemplate();
 	}
 
 	public boolean isAnswerMessage() {
-		return MessageAction.ANSWER == action;
+		return MessageAction.ANSWER == type;
 	}
 
 	public boolean isMailApprove() {
-		return MessageAction.EMAIL_APPROVE_MAIL == action;
+		return MessageAction.EMAIL_APPROVE_MAIL == type;
 	}
 
 	public boolean isAccountDeletion() {
-		return MessageAction.ACCOUNT_DELETION_APPROVE_MAIL == action;
+		return MessageAction.ACCOUNT_DELETION_APPROVE_MAIL == type;
 	}
 }
