@@ -7,17 +7,13 @@ spring:
   data:
     mongodb:
       uri: ${MONGO_URI}
-  mail:
-    host: ${MAIL_HOST}
-    port: 587
-    username: ${MAIL_SENDER}
-    password: ${MAIL_SENDER_PASSWORD}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+# ----------------------------------------------------------------------------------------------------------------------------------
+mail:
+  sender:  ${MAIL_SENDER}
+  password: ${MAIL_SENDER_PASSWORD}
+  port: ${MAIL_PORT}
+  host: ${MAIL_HOST}
+
 # ----------------------------------------------------------------------------------------------------------------------------------
 telegram:
   token: ${TG_TOKEN}
