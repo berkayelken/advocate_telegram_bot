@@ -63,4 +63,12 @@ public class StaticBotMessage {
 	public boolean hasNoAction() {
 		return !type.isNeedAction();
 	}
+
+	public String findFeasibleMessage(boolean fail) {
+		if (fail) {
+			return failMessage;
+		}
+
+		return message;
+	}
 }
