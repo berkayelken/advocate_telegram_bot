@@ -2,8 +2,7 @@ package io.github.berkayelken.advocate.telegram.bot.domain;
 
 public enum ApproveAction {
 	ADD_EMAIL,
-	REMOVE_ACCOUNT,
-	UNKNOWN;
+	REMOVE_ACCOUNT;
 
 	public static ApproveAction findInstance(MessageAction action) {
 		switch (action) {
@@ -14,7 +13,7 @@ public enum ApproveAction {
 				return REMOVE_ACCOUNT;
 			}
 			default -> {
-				return UNKNOWN;
+				return null;
 			}
 		}
 	}
